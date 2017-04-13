@@ -10,7 +10,7 @@ Create roles and assign roles to users. Sometimes it may even be useful to creat
 to get the finest granularity possible, while in other situations you will give the *asterisk* permission
 for admin kind of functionality.
 
-A Redis, MongoDB and In-Memory based backends are provided built-in in the module. There are other third party backends such as [*knex*](https://github.com/christophertrudel/node_acl_knex) based, [*firebase*](https://github.com/tonila/node_acl_firebase) and [*elasticsearch*](https://github.com/adnanesaghir/acl-elasticsearch-backend). There is also an alternative memory backend that supports [*regexps*](https://github.com/futurechan/node_acl-mem-regexp).
+A Redis and In-Memory based backends are provided built-in in the module. There are other third party backends such as [*knex*](https://github.com/christophertrudel/node_acl_knex) based, [*firebase*](https://github.com/tonila/node_acl_firebase) and [*elasticsearch*](https://github.com/adnanesaghir/acl-elasticsearch-backend). There is also an alternative memory backend that supports [*regexps*](https://github.com/futurechan/node_acl-mem-regexp).
 
 Follow [manast](http://twitter.com/manast) for news and updates regarding this library.
 
@@ -70,8 +70,6 @@ acl = new acl(new acl.redisBackend(redisClient, prefix));
 // Or Using the memory backend
 acl = new acl(new acl.memoryBackend());
 
-// Or Using the mongodb backend
-acl = new acl(new acl.mongodbBackend(dbInstance, prefix));
 ```
 
 All the following functions return a promise or optionally take a callback with
@@ -478,7 +476,7 @@ __Arguments__
 <a name="backend" />
 ### backend( db, [prefix] )
 
-Creates a backend instance. All backends except Memory require driver or database instance. `useSingle` is only applicable to the MongoDB backend.
+Creates a backend instance. All backends except Memory require driver or database instance.
 
 __Arguments__
 
@@ -487,15 +485,6 @@ __Arguments__
     prefix    {String} Optional collection prefix
     useSingle     {Boolean} Create one collection for all resources (defaults to false)
 ```
-
-```javascript
-var mongodb = require('mongodb');
-mongodb.connect("mongodb://127.0.0.1:27017/acltest", function(error, db) {
-  var mongoBackend = new acl.mongodbBackend(db, 'acl_');
-});
-```
-
-Creates a new MongoDB backend using database instance `db`.
 
 ```javascript
 var client = require('redis').createClient(6379, '127.0.0.1', {no_ready_check: true});
